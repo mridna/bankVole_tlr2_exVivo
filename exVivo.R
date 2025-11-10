@@ -48,8 +48,6 @@ metaData$conditionSex <- as.factor(paste(metaData$Condition, metaData$Sex, sep="
 #coding genotype as a linear variable
 metaData$Genotype.linear <- c(-1, 0, 1)[match(metaData$Genotype, c(1, 2, 3))]
 
-#combining genotypes 2&3 as a separate column
-metaData$Genotype.combined <- as.factor(c(1,2,2)[match(metaData$Genotype, c(1,2, 3))])
 
 #checking strcuture metaData
 str(metaData)
@@ -255,18 +253,6 @@ car::Anova(pc1.bor.cond.lmer, type="3", test.statistic = "F")
 ranova(pc1.bor.cond.lmer)
 
 
-#repeating analysis with genotype c2/c2 & c3/c3 and as factorial
-pc1.bor.cond.combinedGeno.lmer <- lmer(PC1 ~ Condition  + Genotype.combined + Sex + Genotype.combined:Condition+ Condition:Sex+ Genotype.combined:Sex + Condition:Sex:Genotype.combined+ (1|Vole), data=pca.bor.cond.loadings)
-car::Anova(pc1.bor.cond.combinedGeno.lmer, type="3", test.statistic = "F")
-
-
-pc1.bor.cond.combinedGeno.lmer <- lmer(PC1 ~ Condition  + Genotype.combined + Sex + Genotype.combined:Condition+ Condition:Sex+ Genotype.combined:Sex +(1|Vole), data=pca.bor.cond.loadings)
-car::Anova(pc1.bor.cond.combinedGeno.lmer, type="3", test.statistic = "F")
-
-
-pc1.bor.cond.combinedGeno.lmer <- lmer(PC1 ~ Condition  + Genotype.combined + Sex + Genotype.combined:Condition+ Condition:Sex+ (1|Vole), data=pca.bor.cond.loadings)
-car::Anova(pc1.bor.cond.combinedGeno.lmer, type="3", test.statistic = "F")
-
 
 #linear modelling for condition gas
 #subsetiing degs common to GAS infections
@@ -312,28 +298,6 @@ car::Anova(pc1.gas.cond.lmer, type="3", test.statistic = "F")
 pc1.gas.cond.lmer <- lmer(PC1 ~ Condition  + Genotype.linear + Sex +(1|Vole), data=pca.gas.cond.loadings)
 car::Anova(pc1.gas.cond.lmer, type="3", test.statistic = "F")
 ranova(pc1.gas.cond.lmer)
-
-#repeating analysis with genotype c2/c2 & c3/c3 and as factorial
-pc1.gas.cond.combinedGeno.lmer <- lmer(PC1 ~ Condition  + Genotype.combined + Sex + Genotype.combined:Condition+ Condition:Sex+ Genotype.combined:Sex + Condition:Sex:Genotype.combined+ (1|Vole), data=pca.gas.cond.loadings)
-car::Anova(pc1.gas.cond.combinedGeno.lmer, type="3", test.statistic = "F")
-
-pc1.gas.cond.combinedGeno.lmer <- lmer(PC1 ~ Condition  + Genotype.combined + Sex + Genotype.combined:Condition+ Condition:Sex+ Genotype.combined:Sex + (1|Vole), data=pca.gas.cond.loadings)
-car::Anova(pc1.gas.cond.combinedGeno.lmer, type="3", test.statistic = "F")
-
-pc1.gas.cond.combinedGeno.lmer <- lmer(PC1 ~ Condition  + Genotype.combined + Sex + Genotype.combined:Condition+ Condition:Sex+ (1|Vole), data=pca.gas.cond.loadings)
-car::Anova(pc1.gas.cond.combinedGeno.lmer, type="3", test.statistic = "F")
-
-pc1.gas.cond.combinedGeno.lmer <- lmer(PC1 ~ Condition  + Genotype.combined + Sex + Genotype.combined:Condition+ (1|Vole), data=pca.gas.cond.loadings)
-car::Anova(pc1.gas.cond.combinedGeno.lmer, type="3", test.statistic = "F")
-
-pc1.gas.cond.combinedGeno.lmer <- lmer(PC1 ~ Condition  + Genotype.combined + Sex + (1|Vole), data=pca.gas.cond.loadings)
-car::Anova(pc1.gas.cond.combinedGeno.lmer, type="3", test.statistic = "F")
-
-pc1.gas.cond.combinedGeno.lmer <- lmer(PC1 ~ Condition + Sex + (1|Vole), data=pca.gas.cond.loadings)
-car::Anova(pc1.gas.cond.combinedGeno.lmer, type="3", test.statistic = "F")
-
-pc1.gas.cond.combinedGeno.lmer <- lmer(PC1 ~ Condition + (1|Vole), data=pca.gas.cond.loadings)
-car::Anova(pc1.gas.cond.combinedGeno.lmer, type="3", test.statistic = "F")
 
 ###########################################
 ##DGE by genotpye in each condition########
@@ -708,24 +672,6 @@ car::Anova(lmer.mod2.linear.pc1.bor, type="3", test.statistic="F")
 lmer.mod2.linear.pc1.bor <- lmer(PC1 ~ Condition + Sex + (1|Vole), data=mod2.pca.loading.bor)
 car::Anova(lmer.mod2.linear.pc1.bor, type="3", test.statistic="F")
 
-#Linear modelling of module 2 genes for borrelia, genotype as combined effect
-lmer.mod2.combined.pc1.bor <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Condition:Genotype.combined + Sex:Genotype.combined+ Sex:Condition+ Sex:Condition:Genotype.combined+ (1|Vole), data=mod2.pca.loading.bor)
-car::Anova(lmer.mod2.combined.pc1.bor, type="3", test.statistic="F")
-
-lmer.mod2.combined.pc1.bor <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Condition:Genotype.combined + Sex:Genotype.combined+ Sex:Condition+ (1|Vole), data=mod2.pca.loading.bor)
-car::Anova(lmer.mod2.combined.pc1.bor, type="3", test.statistic="F")
-
-lmer.mod2.combined.pc1.bor <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Condition:Genotype.combined + Sex:Condition+ (1|Vole), data=mod2.pca.loading.bor)
-car::Anova(lmer.mod2.combined.pc1.bor, type="3", test.statistic="F")
-
-lmer.mod2.combined.pc1.bor <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Sex:Condition+ (1|Vole), data=mod2.pca.loading.bor)
-car::Anova(lmer.mod2.combined.pc1.bor, type="3", test.statistic="F")
-
-lmer.mod2.combined.pc1.bor <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + (1|Vole), data=mod2.pca.loading.bor)
-car::Anova(lmer.mod2.combined.pc1.bor, type="3", test.statistic="F")
-
-lmer.mod2.combined.pc1.bor <- lmer(PC1 ~ Condition + Sex + (1|Vole), data=mod2.pca.loading.bor)
-car::Anova(lmer.mod2.combined.pc1.bor, type="3", test.statistic="F")
 
 #Linear model for module 9 borrelia, linear genotype
 vst.mod9.bor <- vst.dds[rownames(vst.dds) %in% moduleGeneID$Module.9, colnames(vst.dds) %in% metaData$NGI.ID[metaData$Bor.paired==1]]
@@ -770,21 +716,6 @@ lmer.mod9.linear.pc1.bor <- lmer(PC1 ~ Condition + Genotype.linear+ Sex + Condit
 car::Anova(lmer.mod9.linear.pc1.bor, type="3", test.statistic="F")
 ranova(lmer.mod9.linear.pc1.bor)
 
-
-#Linear model for module 9 borrelia, combined genotype
-lmer.mod9.combined.pc1.bor <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Condition:Genotype.combined + Sex:Genotype.combined+ Sex:Condition+ Sex:Condition:Genotype.combined+ (1|Vole), data=mod9.pca.loading.bor)
-car::Anova(lmer.mod9.combined.pc1.bor, type="3", test.statistic="F")
-
-lmer.mod9.combined.pc1.bor <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Condition:Genotype.combined + Sex:Genotype.combined+ Sex:Condition+ (1|Vole), data=mod9.pca.loading.bor)
-car::Anova(lmer.mod9.combined.pc1.bor, type="3", test.statistic="F")
-
-lmer.mod9.combined.pc1.bor <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Condition:Genotype.combined + Sex:Condition+ (1|Vole), data=mod9.pca.loading.bor)
-car::Anova(lmer.mod9.combined.pc1.bor, type="3", test.statistic="F")
-
-lmer.mod9.combined.pc1.bor <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Condition:Genotype.combined + (1|Vole), data=mod9.pca.loading.bor)
-car::Anova(lmer.mod9.combined.pc1.bor, type="3", test.statistic="F")
-
-
 #Linear model of key genes of module 9 in borrelia, linear genotype
 vst.key.mod9.bor <- vst.dds[rownames(vst.dds) %in% rownames(key.geneDrivers.module9.bor), colnames(vst.dds) %in% metaData$NGI.ID[metaData$Bor.paired==1]]
 
@@ -814,20 +745,6 @@ car::Anova(lmer.key.mod9.linear.pc1.bor, type="3", test.statistic="F")
 
 lmer.key.mod9.linear.pc1.bor <- lmer(PC1 ~ Condition + Genotype.linear+ Sex + Condition:Genotype.linear + Sex:Condition+ (1|Vole), data=key.mod9.pca.loading.bor)
 car::Anova(lmer.key.mod9.linear.pc1.bor, type="3", test.statistic="F")
-
-#Linear model of key borrelia module 9 genes, combined genotype
-lmer.key.mod9.combined.pc1.bor <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Condition:Genotype.combined + Sex:Genotype.combined+ Sex:Condition+ Sex:Condition:Genotype.combined+ (1|Vole), data=key.mod9.pca.loading.bor)
-car::Anova(lmer.key.mod9.combined.pc1.bor, type="3", test.statistic="F")
-
-lmer.key.mod9.combined.pc1.bor <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Condition:Genotype.combined + Sex:Genotype.combined+ Sex:Condition+(1|Vole), data=key.mod9.pca.loading.bor)
-car::Anova(lmer.key.mod9.combined.pc1.bor, type="3", test.statistic="F")
-
-lmer.key.mod9.combined.pc1.bor <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Condition:Genotype.combined + Sex:Condition+(1|Vole), data=key.mod9.pca.loading.bor)
-car::Anova(lmer.key.mod9.combined.pc1.bor, type="3", test.statistic="F")
-
-
-lmer.key.mod9.combined.pc1.bor <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Condition:Genotype.combined +(1|Vole), data=key.mod9.pca.loading.bor)
-car::Anova(lmer.key.mod9.combined.pc1.bor, type="3", test.statistic="F")
 
 
 ###Modelling module 2 and 9 for GAS
@@ -863,28 +780,6 @@ car::Anova(lmer.mod2.linear.pc1.gas, type="3", test.statistic = "F")
 
 lmer.mod2.linear.pc1.gas <- lmer(PC1 ~ Condition + Genotype.linear+ Sex + (1|Vole), data=mod2.pca.loading.gas)
 car::Anova(lmer.mod2.linear.pc1.gas, type="3", test.statistic = "F")
-
-#Module 2 genes for GAS, genotype as combined factor
-lmer.mod2.combined.pc1.gas <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Condition:Genotype.combined + Sex:Genotype.combined+ Sex:Condition+ Sex:Condition:Genotype.combined+  (1|Vole), data=mod2.pca.loading.gas)
-car::Anova(lmer.mod2.combined.pc1.gas, type="3", test.statistic = "F")
-
-lmer.mod2.combined.pc1.gas <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Condition:Genotype.combined + Sex:Genotype.combined+ Sex:Condition+ (1|Vole), data=mod2.pca.loading.gas)
-car::Anova(lmer.mod2.combined.pc1.gas, type="3", test.statistic = "F")
-
-lmer.mod2.combined.pc1.gas <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Condition:Genotype.combined + Sex:Condition+ (1|Vole), data=mod2.pca.loading.gas)
-car::Anova(lmer.mod2.combined.pc1.gas, type="3", test.statistic = "F")
-
-lmer.mod2.combined.pc1.gas <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Condition:Genotype.combined + (1|Vole), data=mod2.pca.loading.gas)
-car::Anova(lmer.mod2.combined.pc1.gas, type="3", test.statistic = "F")
-
-lmer.mod2.combined.pc1.gas <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + (1|Vole), data=mod2.pca.loading.gas)
-car::Anova(lmer.mod2.combined.pc1.gas, type="3", test.statistic = "F")
-
-lmer.mod2.combined.pc1.gas <- lmer(PC1 ~ Condition + Sex + (1|Vole), data=mod2.pca.loading.gas)
-car::Anova(lmer.mod2.combined.pc1.gas, type="3", test.statistic = "F")
-
-lmer.mod2.combined.pc1.gas <- lmer(PC1 ~ Condition + (1|Vole), data=mod2.pca.loading.gas)
-car::Anova(lmer.mod2.combined.pc1.gas, type="3", test.statistic = "F")
 
 #Module 9 genes for GAS, genotype as linear factor
 ###linear modeling of module 9 genes for gas
@@ -926,22 +821,6 @@ car::Anova(lmer.mod9.linear.pc1.gas, type="3", test.statistic="F")
 lmer.mod9.linear.pc1.gas <- lmer(PC1 ~ Condition + Genotype.linear+ Sex + Sex:Genotype.linear+  (1|Vole), data=mod9.pca.loading.gas)
 car::Anova(lmer.mod9.linear.pc1.gas, type="3", test.statistic="F")
 
-#Module 9 genes for gas, combined genotype
-lmer.mod9.combined.pc1.gas <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Condition:Genotype.combined + Sex:Genotype.combined+ Sex:Condition+ Sex:Condition:Genotype.combined+ (1|Vole), data=mod9.pca.loading.gas)
-car::Anova(lmer.mod9.combined.pc1.gas, type="3", test.statistic="F")
-
-lmer.mod9.combined.pc1.gas <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Condition:Genotype.combined + Sex:Genotype.combined+ Sex:Condition+ (1|Vole), data=mod9.pca.loading.gas)
-car::Anova(lmer.mod9.combined.pc1.gas, type="3", test.statistic="F")
-
-lmer.mod9.combined.pc1.gas <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Condition:Genotype.combined + Sex:Genotype.combined+(1|Vole), data=mod9.pca.loading.gas)
-car::Anova(lmer.mod9.combined.pc1.gas, type="3", test.statistic="F")
-
-lmer.mod9.combined.pc1.gas <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Sex:Genotype.combined+(1|Vole), data=mod9.pca.loading.gas)
-car::Anova(lmer.mod9.combined.pc1.gas, type="3", test.statistic="F")
-
-lmer.mod9.combined.pc1.gas <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + (1|Vole), data=mod9.pca.loading.gas)
-car::Anova(lmer.mod9.combined.pc1.gas, type="3", test.statistic="F")
-
 
 #GAS specific module 15, as linear module
 vst.mod15.gas <- vst.dds[rownames(vst.dds) %in% moduleGeneID$Module.15, colnames(vst.dds) %in% metaData$NGI.ID[metaData$GAS.paired==1]]
@@ -982,31 +861,6 @@ car::Anova(lmer.mod15.linear.pc1.gas, type="3", test.statistic = "F")
 
 lmer.mod15.linear.pc1.gas <- lmer(PC1 ~ Condition + (1|Vole), data=mod15.pca.loading.gas)
 car::Anova(lmer.mod15.linear.pc1.gas, type="3", test.statistic = "F")
-
-#module 15 on gas, combined genotype
-lmer.mod15.combined.pc1.gas <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Condition:Genotype.combined + Sex:Genotype.combined+ Sex:Condition+ Sex:Condition:Genotype.combined+  (1|Vole), data=mod15.pca.loading.gas)
-car::Anova(lmer.mod15.combined.pc1.gas, type="3", test.statistic = "F")
-
-lmer.mod15.combined.pc1.gas <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Condition:Genotype.combined + Sex:Genotype.combined+ Sex:Condition+(1|Vole), data=mod15.pca.loading.gas)
-car::Anova(lmer.mod15.combined.pc1.gas, type="3", test.statistic = "F")
-
-
-lmer.mod15.combined.pc1.gas <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Condition:Genotype.combined + Sex:Genotype.combined+ (1|Vole), data=mod15.pca.loading.gas)
-car::Anova(lmer.mod15.combined.pc1.gas, type="3", test.statistic = "F")
-
-lmer.mod15.combined.pc1.gas <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + Condition:Genotype.combined + (1|Vole), data=mod15.pca.loading.gas)
-car::Anova(lmer.mod15.combined.pc1.gas, type="3", test.statistic = "F")
-
-
-lmer.mod15.combined.pc1.gas <- lmer(PC1 ~ Condition + Genotype.combined+ Sex + (1|Vole), data=mod15.pca.loading.gas)
-car::Anova(lmer.mod15.combined.pc1.gas, type="3", test.statistic = "F")
-
-
-lmer.mod15.combined.pc1.gas <- lmer(PC1 ~ Condition + Sex + (1|Vole), data=mod15.pca.loading.gas)
-car::Anova(lmer.mod15.combined.pc1.gas, type="3", test.statistic = "F")
-
-lmer.mod15.combined.pc1.gas <- lmer(PC1 ~ Condition + (1|Vole), data=mod15.pca.loading.gas)
-car::Anova(lmer.mod15.combined.pc1.gas, type="3", test.statistic = "F")
 
 #########Modelling effect of tlr2 expression for each condition
 
